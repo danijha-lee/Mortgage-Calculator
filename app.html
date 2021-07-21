@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>Fizz Buzz | The App</title>
+    <title>Bigger Cents | The App</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +27,7 @@
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Fizz Buzz</a>
+            <a class="navbar-brand" href="index.html">Bigger Cents</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,57 +58,35 @@
 
 
 
-    <main class="flex-shrink-0">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <h1 style="margin-top: 100px;">Fizz Buzz: A Coding Project</h1>
-                            <p>
-                                When it counts you Fizz Buzz. A javascript coding exercise using loops. Write a program
-                                that
-                                prints the numbers from 1 to 100 and for multiples of '3' display 'Fizz' instead of the
-                                number and for the multiples
-                                of '5' display 'Buzz'. If a multiple of both display 'FizzBuzz'
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h1>Instructions</h1>
-                            <p>
-                                Enter a fizz and a buzz value. Press the button and the values will appear.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-lg-8">
-                    <div>
-                        <h5 style="margin-top: 100px;">Enter Values</h5>
-                        <form class="row gy-2 gx-3">
-                            <div class="col">
-                            <input type="number" class="form-control" id="fizzValue" placeholder= value=3 aria-label="Fizz Value">
-                        </div>
-                        <div class="col">
-                            <input type="number" class="form-control" id="buzzValue" placeholder="" value=5 aria-label="Buzz Value">
-                        </div>
-                        <div class="col-12 d-flex justify-content-end">
-                        <button id="btnSubmit" type="button" class="btn btn-dark-lg">Click Me</button>
-                    </div>
-                        </form>
-                    <h2 class="mt-5 border-bottom border-2 ">Results</h2>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-sm"> 
-                                <tbody id="results">
-                                 <!---Results Go Here-->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <main class="flex-shrink-0" style="margin-top: 100px;">
+        <div class="container-fluid">
+           <div class="row">
+               <div class="col-3 border" style="background-color: burlywood;">
+                 <form>
+                     <div class="mb-2">
+                         <label for="Loan Amount" class="form-label">Loan Amount</label>
+                         <input type="number" class="form-control" id="loanAmount">
+                     </div>
+                     <div class="mb-2">
+                         <label for="Term" class="form-label">Term (Months)</label>
+                         <input type="number" class="form-control" id="term">
+                     </div>
+                     <div class="mb-2">
+                         <label for="interestRate" class="form-label">Interest Rate</label>
+                         <input type="number" class="form-control" id="rate">
+                     </div>
+                     <button type="button" class="btn btn-dark" id="btnSubmit">Calculate</button>
+
+                 </form>
+               </div>
+               <div class="col-9 border gx-4">
+                      <h1 style="text-align: center;">Your Monthly Payments</h1>
+                      <!--Payment will go here-->
+                      <p>
+
+                      </p>
+               </div>
+           </div>
     </main>
 
 
