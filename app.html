@@ -61,31 +61,60 @@
     <main class="flex-shrink-0" style="margin-top: 100px;">
         <div class="container-fluid">
            <div class="row">
-               <div class="col-3 border" style="background-color: burlywood;">
+               <div id="inputGroup" class="col border p-3">
                  <form>
                      <div class="mb-2">
-                         <label for="Loan Amount" class="form-label">Loan Amount</label>
-                         <input type="number" class="form-control" id="loanAmount">
+                         <label for="amount" class="form-label">Loan Amount:</label>
+                         <input type="number" class="form-control" id="amount" placeholder="25,000">
                      </div>
                      <div class="mb-2">
-                         <label for="Term" class="form-label">Term (Months)</label>
-                         <input type="number" class="form-control" id="term">
+                         <label for="Term" class="form-label">Term (Months):</label>
+                         <input type="number" class="form-control" id="term" placeholder="60">
                      </div>
                      <div class="mb-2">
-                         <label for="interestRate" class="form-label">Interest Rate</label>
-                         <input type="number" class="form-control" id="rate">
+                         <label for="interestRate" class="form-label">Rate:</label>
+                         <input type="number" class="form-control" id="rate" placeholder="5%">
                      </div>
-                     <button type="button" class="btn btn-dark" id="btnSubmit">Calculate</button>
+                     <button type="button" class="btn btn-dark btn-sm m-5" id="btnSubmit">Calculate</button>
 
                  </form>
                </div>
-               <div class="col-9 border gx-4">
-                      <h1 style="text-align: center;">Your Monthly Payments</h1>
-                      <!--Payment will go here-->
-                      <p>
+               <div class="col border" >
+                     <div  id="paymentTitle" style="text-align: center;">
+                       <h1 class="mt-6">Your Monthly Payments<h1>
+                     </div>
+                
+        
+           <div class="row">
+              <div class="col-12"></div>
+                      <h2 class="text-center" style="margin-top: 70px;" id="payment">
+                        471.120
+                     </h2>
 
-                      </p>
-               </div>
+                      <div class="row">
+                          <div class="col-6">
+                              <label class="text-left "> Total Principal</label>
+                          </div>
+                          <div class="col-6 text-right" id="totalPrincipal">
+
+                          </div>
+                          <div class="row">
+                              <div class="col-6">
+                                  <label class="text-left"> Total Interest</label>
+                              </div>
+                              <div class="col-6 text-right" id="totalInterest">
+
+                              </div>
+                              <div class="row">
+                                  <div class="col-6">
+                                      <label class="text-left"> Total Cost</label>
+                                  </div>
+                                  <div class="col-6 text-right" id="totalCost">
+
+                                  </div>
+                              </div>
+                          </div>
+              </div>
            </div>
     </main>
 
