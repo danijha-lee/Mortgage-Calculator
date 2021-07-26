@@ -31,7 +31,7 @@ function getPayments(amount, rate, term, payment) {
     let monthlyInterest = 0;
 
     // goes through every month and individually calculate all values
-    for (month = 1; month <= term; month++) {
+    for (month = 1; month &lt= term; month++) {
         monthlyInterest = calcInterest(balance, rate);
         totalInterest += monthlyInterest;
         monthlyPrincipal = payment - monthlyInterest;
@@ -61,7 +61,7 @@ function displayData(payments, loanAmount, payment) {
         style: 'currency',
         currency: 'USD',
     });
-    for (let i = 0; i < payments.length; i++) {
+    for (let i = 0; i &lt payments.length; i++) {
         //get a clone row template
         payRow = template.content.cloneNode(true);
         //grab only the columns in the template

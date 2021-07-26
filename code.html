@@ -61,105 +61,109 @@
             <div class="row">
                 <div class="col-8" id="codeCol">
                     <pre><code class="language-javascript line-numbers">
-function getNumbers() {
-    //access the webpage and get the values from the inputs
-    let startValue = document.getElementById("startValue").value;
-    let endValue = document.getElementById("endValue").value;
 
-    //parseInt is used to convert a string number to a number number
-    let newStart = parseInt(startValue);
-    let newEnd = parseInt(endValue);
-
-    //create a Boolean variable to check for an error state
-    //we start with false so that it does not trigger
-    let errorState = false;
-    //create an empty string that will store any error messages generated
-    let errorMsg = "";
-
-    //make sure the user entered 2 numbers
-    //isNaN is a built in JS function that returns true if the variable is 'not a number'
-    if (isNaN(newStart) || isNaN(newEnd)) {
-        //change errorState to true
-errorState = true;
-//add a specific error message to the empty string
-errorMsg += "Please use numbers&lt;hr/>";
+function calcPayment(amount, rate, term) {
+return (amount * rate) / (1 - Math.pow(1 + rate, -term));
 }
 
-//make sure that the start value is less than the end value
-if (newStart > newEnd) {
-//change errorState to true
-errorState = true;
-//add a specific error message to the empty string
-errorMsg += "Start value must be less than end value&lt;hr/>";
+function calcInterest(balance, rate) {
+return balance * rate;
 }
 
-//Set an upper and lower bound for the loops
-//This is an optional addition that improves the user experience
-if (newStart > 10000 || newStart &lt; -10000 || newEnd > 10000 || newEnd &lt; -10000) {
-//change errorState to true
-errorState = true;
-//add a specific error message to the empty string
-errorMsg += "-10,000 and 10,000 are the limit&lt;hr/>";
+function calcRate() {
+let rate = parseFloat(document.getElementById("lrate").value);
+return rate = rate / 1200;
 }
 
-//if any of the error cases happened fire a SweetAlert and exit the function
-if (errorState) {
-Swal.fire(
-'Something went wrong',
-`${errorMsg}`,
-'error'
-);
-return;
-}
-//take the start and end values as the bounds for a 'for' loop
-//that will create an array and return it
-let numbers = generateNumbers(newStart, newEnd);
+function buildSchedule() {
+let loanAmount = Number(document.getElementById("lamount").value);
+let term = parseInt(document.getElementById("lterm").value);
+let rate = calcRate();
 
-//take the array that was returned and pass it to a function that will
-//display it
-displayNumbers(numbers);
-}
-
-//Wrapper function/method - a function that calls other functions
-
-function generateNumbers(startValue, endValue) {
-let numbers = [];
-
-//loop over every number from startValue to endValue
-for (let index = startValue; index &lt;= endValue; index++) {
-numbers.push(index);
-}
-
-//send the array of numbers back to the wrapper function
-return numbers;
+let payment = calcPayment(loanAmount, rate, term);
+let payments = getPayments(loanAmount, rate, term, payment);
+displayData(payments, loanAmount, payment);
 }
 
 
-//this function exists to display the results to the user
-function displayNumbers(fluffyKitty) {
-//create a string to hold a class name based on even or odd
-let className = "even";
-//create a string that will hold our output
-let templateRows = "";
+function getPayments(amount, rate, term, payment) {
+let payments = [];
+let balance = amount;
+let totalInterest = 0;
+let monthlyPrincipal = 0;
+let monthlyInterest = 0;
 
-//go through each number in the array and determine if that number is even or odd
-//the '%' modulus operand returns the remainder from division
-//ex. 3 % 2 = 1
-//ex. 100 % 5 = 0
-for (let index = 0; index &lt; fluffyKitty.length; index++) {
-let number = fluffyKitty[index];
 
-if (number % 2 == 0) {
-className = "even";
-} else {
-className = "odd";
+for (month = 1; month &lt= term; month++) {
+monthlyInterest = calcInterest(balance, rate);
+totalInterest += monthlyInterest;
+monthlyPrincipal = payment - monthlyInterest;
+balance = balance - monthlyPrincipal;
+
+
+let currentPayment = {};
+currentPayment["month"] = month;
+currentPayment["payment"] = payment;
+currentPayment["principal"] = monthlyPrincipal;
+currentPayment["interest"] = monthlyInterest;
+currentPayment["totalInterest"] = totalInterest;
+currentPayment["balance"] = balance;
+payments.push(currentPayment);
+}
+return payments;
 }
 
-//use string concatenation to create a long string of HTML to display
-templateRows = templateRows + `&lt;tr>&lt;td class="${className}">${number}&lt;/td>&lt;/tr>`;
+function displayData(payments, loanAmount, payment) {
+
+let tableBody = document.getElementById("scheduleBody");
+let template = document.getElementById("scheduleTemplate");
+
+tableBody.innerHTML = "";
+
+let currencyFormatter = new Intl.NumberFormat('en-US', {
+style: 'currency',
+currency: 'USD',
+});
+for (let i = 0; i &lt payments.length; i++) {
+
+payRow = template.content.cloneNode(true);
+
+paycols = payRow.querySelectorAll("td");
+
+paycols[0].textContent = payments[i].month;
+paycols[1].textContent = currencyFormatter.format(payments[i].payment.toFixed(2));
+paycols[2].textContent = currencyFormatter.format(payments[i].principal.toFixed(2));
+paycols[3].textContent = currencyFormatter.format(payments[i].interest.toFixed(2));
+paycols[4].textContent = currencyFormatter.format(payments[i].totalInterest.toFixed(2));
+paycols[5].textContent = currencyFormatter.format(Math.abs(payments[i].balance.toFixed(2)));
+
+tableBody.appendChild(payRow);
 }
 
-document.getElementById("output").innerHTML = templateRows;
+let totalInterest = payments[payments.length - 1].totalInterest;
+
+let totalCost = Number(loanAmount) + totalInterest;
+
+let labelPrincipal = document.getElementById("totalPrincipal");
+labelPrincipal.innerHTML = Number(loanAmount).toLocaleString("en-US", {
+style: "currency",
+currency: "USD",
+});
+let labelInterest = document.getElementById("totalInterest");
+labelInterest.innerHTML = Number(totalInterest).toLocaleString("en-US", {
+style: "currency",
+currency: "USD",
+});
+let paymentdiv = document.getElementById("payment");
+paymentdiv.innerHTML = Number(payment).toLocaleString("en-US", {
+style: "currency",
+currency: "USD",
+});
+let totalCostDiv = document.getElementById("totalCost");
+totalCostDiv.innerHTML = Number(totalCost).toLocaleString("en-US", {
+style: "currency",
+currency: "USD",
+});
 }
 </code>
 </pre>
@@ -167,16 +171,20 @@ document.getElementById("output").innerHTML = templateRows;
                 <div class="col-4" id="explainCol">
                     <h1 style="text-align: center;"><strong>The Code</strong></h1>
                     <p>
-                        First we use the function getValues to get the fizz and buzz values from the user. Our code goes a 
-                        step further to not only display "Fizz" and "Buzz" for 3 and 5; but for any number the user enters. 
-                        We check to make sure the values entered are numbers with parseint. If the user's input is not a 
-                        number, the alert "You Must User Integers" will appear on the screen.
+                       The function calcPayment takes the parameters amount, rate, and term; then calculates the inputs given by the user to determine the monthly 
+                       payment amount.
                     </p>
                     <hr>
                     <p>
-                        We have the function fizzBuzz that takes two parameters, fizzValue and buzzValue; then create an incrementing for loop
-                        that loops from 1 to 100. We use a truthy if statement to check each numnber in the returnArray array that increments from 
-                        1 to 100 to check if it is first a multiple of both the number 3 and 5; if yes, the the function will return 'FizzBuzz'. 
+                       The function calcInterest takes two parameters; balance and rate. This function calculates the 
+                       amount of interest the user will pay over the duration of the loan.
+                    </p>
+                    <hr>
+                    <p>
+                        The function calcRate grabs the interest rate input given by the user; then calculates the total amout of interest the 
+                        user will pay throughout the duration of the loan.
+                    </p> 
+                    <hr> 
                     <br>
                         Next, an else if statement checks if the numbers entered by the user
                         are multiples of either 3; if yes, the function will push'Fizz' into the array. 
