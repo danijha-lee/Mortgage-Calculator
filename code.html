@@ -186,18 +186,23 @@ currency: "USD",
                     </p> 
                     <hr> 
                     <br>
-                        Next, an else if statement checks if the numbers entered by the user
-                        are multiples of either 3; if yes, the function will push'Fizz' into the array. 
+                        The buildSchedule function gets the values for the payment, total interest, and total cost of the loan; then calls the displayData function
+                        <hr>
+                       
                         <br>
-                        After that, an else if statement will check if the number entered by the user is 
-                        a multiple of 5; if yes, the function will push 'Buzz' into the array.
-                        <br>
-                        If the number is not a multiple of 3 or 5 the function will push the number into the array.
+                      getPayments is a fucntion that takes the parameters amount, rate, term, and payment. This function 
+                      takes variabes and ouputs an array of set values. The for loop goes through each month and calculates each value. 
+                      (the balance, total interest paid, total principal paid, the amount paid in monthly payments)
+                      <br>
+                      currentPayment is a variable that creates an empty object and sets all the values and pushes them into an array
                     </p>
                     <hr>
                     <p>
-                        The displayData function takes an argument of fbArray, loops over the array and creates a 
-                        tablerow for each item then adds all the rows to the table. 
+                        The displayData function grabs the table that we are going to use to display 
+                        our data from the html and clears any data that is currently stored in the table.
+                        The currency formattter is configured to make sure the data is displayed as money and not 
+                        integers. A for loop grabs a cloned row template and columns to append the data to the table and 
+                        displays it while building out the summary section of the app page.
                     </p>
 
                 </div>
